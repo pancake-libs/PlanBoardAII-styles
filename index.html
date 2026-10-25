@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>PlanBoardAII 10 スタイル</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@600;700&display=swap">
+<style>
+  /* 並べ方：上にスタイルの目次、スタイルごとに「説明（左）・大きな写真（右）・下に画面の切り替え」。最後に全スタイル共通の部品 */
+  :root {
+    --bg: #f3f2ee;
+    --panel: #ffffff;
+    --ink: #1f1e1b;
+    --ink-2: #57544c;
+    --line: #dcd9d0;
+    --chip: #ebe9e2;
+    --focus: #1d4ed8;
+    --shadow: 0 1px 2px rgb(30 28 20 / 6%), 0 12px 32px -16px rgb(30 28 20 / 22%);
+    --display: 'Zen Old Mincho', 'Yu Mincho', serif;
+    --body: 'Zen Kaku Gothic New', 'Yu Gothic UI', 'Meiryo', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #191917; --panel: #232220; --ink: #efece4; --ink-2: #b9b5aa; --line: #3a3833; --chip: #2d2c29; --focus: #8fb7ff; --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px -16px rgb(0 0 0 / 60%); color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #191917; --panel: #232220; --ink: #efece4; --ink-2: #b9b5aa; --line: #3a3833; --chip: #2d2c29; --focus: #8fb7ff; --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px -16px rgb(0 0 0 / 60%); color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.7; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-block: 40px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 56px; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+  header { display: grid; gap: 14px; }
+  header h1 { font-family: var(--display); font-size: clamp(30px, 4.6vw, 46px); line-height: 1.25; margin: 0; letter-spacing: .02em; text-wrap: balance; }
+  header p { margin: 0; color: var(--ink-2); max-width: 46em; }
+  .note { font-size: 13px; color: var(--ink-2); }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .toc a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 10px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 14px; }
+  .toc a:hover { border-color: var(--ink-2); }
+  .toc i, .sw { width: 12px; height: 12px; border-radius: 50%; background: var(--ac); flex: none; box-shadow: 0 0 0 1px rgb(0 0 0 / 12%); }
+
+  /* スタイルごとの区画 */
+  .style { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; align-items: start; scroll-margin-top: 24px; }
+  .info { display: grid; gap: 12px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); }
+  .info .no { font-size: 12px; letter-spacing: .18em; color: var(--ink-2); display: flex; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
+  .info .no::after { content: ''; flex: 1; height: 3px; border-radius: 2px; background: var(--ac); }
+  .info h2 { font-family: var(--display); font-size: 40px; line-height: 1.1; margin: 0; }
+  .mood { margin: 0; font-weight: 700; }
+  .mood .sw { display: inline-block; vertical-align: -1px; margin-right: 8px; }
+  dl { margin: 0; display: grid; gap: 10px; }
+  dt { font-size: 12px; letter-spacing: .1em; color: var(--ink-2); }
+  dd { margin: 0; }
+  dd ul { margin: 2px 0 0; padding-left: 1.2em; }
+  dd li + li { margin-top: 2px; }
+
+  .viewer { display: grid; gap: 10px; min-width: 0; }
+  .shot { display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); box-shadow: var(--shadow); cursor: zoom-in; aspect-ratio: 16 / 9; max-width: 100%; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .cap { margin: 0; font-size: 13px; color: var(--ink-2); min-height: 1.7em; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tabs button { display: grid; gap: 4px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); cursor: pointer; width: 132px; overflow: hidden; text-align: left; font: inherit; }
+  /* 小さな写真は幅に合わせた 16:9 にする（img の height の値で縦に伸びないように） */
+  .tabs button img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; }
+  .tabs button span { font-size: 12px; font-weight: 700; padding: 0 8px 6px; line-height: 1.4; }
+  .tabs button[aria-pressed="true"] { border-color: var(--ac); box-shadow: 0 0 0 2px var(--ac); }
+
+  /* 全スタイル共通の部品 */
+  .common { display: grid; gap: 20px; }
+  .common > h2 { font-family: var(--display); font-size: 30px; margin: 0; }
+  .common > p { margin: 0; color: var(--ink-2); max-width: 46em; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .card { display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .card h3 { margin: 0; font-size: 17px; }
+  .card p { margin: 0; font-size: 14px; color: var(--ink-2); }
+
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgb(0 0 0 / 78%); }
+  dialog img { display: block; max-width: 96vw; max-height: 86vh; border-radius: 6px; }
+  dialog .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: #f2f0ea; font-size: 14px; padding: 8px 2px 0; }
+  dialog button { font: inherit; font-weight: 700; color: #1f1e1b; background: #f2f0ea; border: 0; border-radius: 6px; padding: 4px 16px; cursor: pointer; }
+  footer { font-size: 13px; color: var(--ink-2); border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 4px; }
+
+  @media (max-width: 860px) {
+    .style { grid-template-columns: 1fr; }
+    .info { position: static; }
+    .cards { grid-template-columns: 1fr; }
+    .tabs button { width: calc(33.33% - 6px); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>PlanBoardAII 10 スタイル</h1>
+    <p>計画ボードの次の版「PlanBoardAII」の画面イメージです。同じ画面・同じ部品を、10 のスタイル（色・形・動き）で描き分けています。SpringKit 以外の自社アプリ・社内ツールの画面は、この中から選んで作り始めます。</p>
+    <p class="note">写真は 1920×1080 で撮った画面です。データはすべて架空（「部品在庫管理システム」という架空の案件）です。写真を押すと大きく見られます。</p>
+    <nav class="toc" aria-label="スタイルの一覧" id="toc"></nav>
+  </header>
+
+  <main id="styles" style="display:grid;gap:72px"></main>
+
+  <section class="common" id="common" aria-labelledby="commonTitle">
+    <h2 id="commonTitle">全スタイル共通の部品</h2>
+    <p>どのスタイルにも入っている部品です。色と形は、それぞれのスタイルに合わせて変わります。</p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <footer>
+    <span>2026-10-25 時点の画面イメージ。正本は共通部の雛形（01_PLATFORM\templates\app-ui\）です。</span>
+    <span>アイコンは Fluent UI System Icons（Microsoft、MIT ライセンス）を使っています。</span>
+  </footer>
+</div>
+
+<dialog id="zoom" aria-label="大きな写真">
+  <img id="zoomImg" alt="">
+  <div class="bar"><span id="zoomCap"></span><button type="button" id="zoomClose">閉じる</button></div>
+</dialog>
+
+<script>
+  // スタイルごとの説明と写真。写真は img/<名前>.jpg
+  const SCREENS = [['dash', 'ダッシュボード'], ['map', '地図'], ['ledger', '台帳'], ['ai', 'AI との会話'], ['memo', 'メモ帳を開いたところ']];
+  const STYLES = [
+    { id: 'transit', name: '路線図', ac: '#f5c400', mood: 'きちんと・公共の案内', fit: '工程・段取りが一本道で進むもの、依存のある作業の管理',
+      parts: ['工程を駅、今の工程を電車で示す路線。承認すると電車が次の駅へ進む', '運行情報（平常運転・遅れ・見合わせ）', '次の一手を乗り物の印で示す（AI＝電車・人＝車・外部＝バス）', '地図の列を縦の路線にする'] },
+    { id: 'washi', name: '四季', ac: '#e34a2f', mood: '落ち着き・和', fit: '期限・季節で動く業務（年間の行事・月次の締め）、お客様に見せる画面',
+      parts: ['12 か月の期限の暦。円盤を回して月を選び、その月の期限を一覧', '地の色は春夏秋冬の札で、気分に合わせて選べる', '承認の印は朱の角印'],
+      extra: [['washi_dash_spring', '地の色：春'], ['washi_dash_summer', '地の色：夏'], ['washi_dash_winter', '地の色：冬']] },
+    { id: 'bento', name: '弁当', ac: '#9ccc2a', mood: '軽快・整理された', fit: '情報の種類が多いダッシュボード、どの画面からも使う操作があるもの',
+      parts: ['大きさの違う札を組んだダッシュボード', '動く時計', '右下は大きな丸いボタン（黄緑の「AI に頼む」・白い「メモ帳」）'] },
+    { id: 'tool', name: '彩', ac: '#ff7a5c', mood: 'はっきり・道具', fit: '状態の色分けをいちばん大事にする画面（一覧・地図）',
+      parts: ['数字の札を見本の 5 色で塗る', '地図は、列ごとの地の色と、次の一手の札の色を重ねる', '部品の枠を濃くして、はっきり見せる'] },
+    { id: 'garden', name: '庭', ac: '#7fa36b', mood: 'やさしい・励ます', fit: '進み具合・続けた日数を見せたいもの、社内の自己管理',
+      parts: ['挨拶と確認することから始まるダッシュボード', 'フェーズの完了の同心円、台帳の片づけ具合で育つ鉢、1 週間の棒', '地図の札にアイコンと色を付けられる'],
+      extra: [['garden_map_edit', 'BOX の編集（アイコンと色）']] },
+    { id: 'moss', name: '森', ac: '#6f8f3f', mood: '深い・静か', fit: '庭と同じ使い方で、落ち着いた色にしたい時',
+      parts: ['庭と同じ部品を、苔から砂へにじむ地と生成りの札で'], extra: [['moss_map_edit', 'BOX の編集（アイコンと色）']] },
+    { id: 'roast', name: '珈琲', ac: '#b87333', mood: '温かい・手触り', fit: '階層（大分類 → 小分類）を選んで中身を見るもの',
+      parts: ['2 段の輪（内側＝フェーズ、外側＝工程）。押すと扇が浮き、右のカードが変わる', '厚みのあるボタン（押すと沈む）', 'メモ帳はクラフト紙に銅の綴じ穴'] },
+    { id: 'atelier', name: '昼夜', ac: '#c9a86a', mood: '集中・夜の作業', fit: 'AI・バッチなど待ち時間のある処理、長時間使う画面',
+      parts: ['炭色の夜と、生成りの昼を太陽と月のスイッチで切り替える', '液体で満たす完了の円', 'メモ帳はタイプライターの紙'],
+      extra: [['atelier_dash_day', '昼の表示（ダッシュボード）'], ['atelier_ai_day', '昼の表示（AI との会話）']] },
+    { id: 'brutal', name: '若者', ac: '#e0b800', mood: '強い・目立つ', fit: '試作・社内の掲示、目立たせたい少数の操作',
+      parts: ['太い黒枠と硬い影', '承認すると印が押され、札が揺れる'] },
+    { id: 'glass', name: '硝子', ac: '#7a6cf0', mood: '透明・上品', fit: '経営者向けの概要、数字と推移を一覧するダッシュボード',
+      parts: ['冷たい色がにじむ地と、透明な札', '左のアイコンの列で画面を移る', '数字の札に推移の線、右の列にこれからの 7 日の期限'] },
+  ];
+  const COMMON = [
+    ['transit_dash_break', '状態の帯と休憩の知らせ', '上の帯に、挨拶・励まし・日付と時刻・作業時間・AI の使用量の目安（トークンと金額）を固定で出します。作業が 60 分を超えると、休憩の知らせを 1 回だけ出します。'],
+    ['glass_dash_breakdlg', '休憩の画面', '「休憩する」を押すと、10 分の残り時間と休憩の案を出します。目安は厚生労働省の「情報機器作業における労働衛生管理のためのガイドライン」（1 時間以内に 10〜15 分の作業休止）です。'],
+    ['bento_memo', '右下の欄とメモ帳', '「AI に頼む」と「メモ帳」は、どの画面でも右下にあります。メモ帳は自分だけのもので、複数のページに分けて書けます。'],
+    ['bento_dash_font_l', '文字の大きさ', '右上の「文字」で、小・中・大を選べます（写真は大）。余白や札の幅はそのままで、文字だけが大きくなります。'],
+  ];
+
+  const $ = (s) => document.querySelector(s);
+  const el = (tag, attrs = {}, ...kids) => {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) { if (k === 'class') e.className = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v); }
+    for (const k of kids.flat()) if (k != null) e.append(k instanceof Node ? k : document.createTextNode(String(k)));
+    return e;
+  };
+  const src = (n) => `img/${n}.jpg`;
+
+  // 大きな写真
+  const zoom = $('#zoom');
+  function openZoom(name, cap) { $('#zoomImg').src = src(name); $('#zoomImg').alt = cap; $('#zoomCap').textContent = cap; zoom.showModal(); }
+  $('#zoomClose').addEventListener('click', () => zoom.close());
+  zoom.addEventListener('click', (e) => { if (e.target === zoom) zoom.close(); });
+
+  // 目次とスタイルの区画
+  STYLES.forEach((s, i) => {
+    $('#toc').append(el('a', { href: '#' + s.id, style: `--ac:${s.ac}` }, el('i', { 'aria-hidden': 'true' }), s.name));
+    const shots = [...SCREENS.map(([k, label]) => [`${s.id}_${k}`, label]), ...(s.extra || [])];
+    const big = el('img', { src: src(shots[0][0]), alt: `${s.name}：${shots[0][1]}`, width: '1600', height: '900' });
+    const cap = el('p', { class: 'cap' }, `${s.name}・${shots[0][1]}`);
+    let cur = shots[0];
+    const shotBtn = el('button', { type: 'button', class: 'shot', 'aria-label': '大きく見る', onclick: () => openZoom(cur[0], `${s.name}・${cur[1]}`) }, big);
+    const tabs = el('div', { class: 'tabs', role: 'group', 'aria-label': `${s.name}の画面` });
+    shots.forEach((sh, j) => {
+      const b = el('button', { type: 'button', 'aria-pressed': String(j === 0),
+        onclick: () => { cur = sh; big.src = src(sh[0]); big.alt = `${s.name}：${sh[1]}`; cap.textContent = `${s.name}・${sh[1]}`; tabs.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); } },
+      el('img', { src: src(sh[0]), alt: '', loading: 'lazy', width: '1600', height: '900' }), el('span', {}, sh[1]));
+      tabs.append(b);
+    });
+    $('#styles').append(el('section', { class: 'style', id: s.id, style: `--ac:${s.ac}`, 'aria-labelledby': `t-${s.id}` },
+      el('div', { class: 'info' },
+        el('div', { class: 'no' }, `${String(i + 1).padStart(2, '0')} / 10`),
+        el('h2', { id: `t-${s.id}` }, s.name),
+        el('p', { class: 'mood' }, el('span', { class: 'sw', 'aria-hidden': 'true' }), s.mood),
+        el('dl', {},
+          el('dt', {}, '向く画面'), el('dd', {}, s.fit),
+          el('dt', {}, 'このスタイルの部品'), el('dd', {}, el('ul', {}, s.parts.map((p) => el('li', {}, p)))))),
+      el('div', { class: 'viewer' }, shotBtn, cap, tabs)));
+  });
+  COMMON.forEach(([n, t, d]) => {
+    $('#cards').append(el('article', { class: 'card' },
+      el('button', { type: 'button', class: 'shot', 'aria-label': `${t}を大きく見る`, onclick: () => openZoom(n, t) }, el('img', { src: src(n), alt: t, loading: 'lazy', width: '1600', height: '900' })),
+      el('h3', {}, t), el('p', {}, d)));
+  });
+  // リンクの #transit などで開いた時は、そのスタイルへ移る
+  if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+</script>
+</body>
+</html>
